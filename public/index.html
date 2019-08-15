@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+
+
+    <title>Biotools</title>
+    <link href="css/sources.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <label for="fasta">Choose a file fasta:</label>
+        <input type="file" id="fasta" name="fasta" accept=".fasta, .fa, .fna, .faa">
+    </div>
+
+    <div>
+        <label for="lista">Choose a file list:</label>
+        <input type="file" id="lista" name="lista" accept=".txt">
+    </div>
+
+    <div>
+        <textarea id="fasta_texto"></textarea>
+    </div>
+
+    <div>
+        <button class="botao">Salvar arquivo</button>
+    </div>
+
+    <script>
+        var btn = document.querySelector('button.botao');
+        btn.onclick = function(){
+            var text = document.getElementById('fasta_texto').textContent;
+            var filename = "file";
+            var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+            saveAs(blob,filename+".fasta");
+        };
+    </script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+</body>
+
+
+</html>
