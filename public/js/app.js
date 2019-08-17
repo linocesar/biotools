@@ -1,6 +1,5 @@
 var data = {}
 
-
 document.getElementById("fasta").addEventListener('change', function () {
 
     var filereader = new FileReader();
@@ -32,7 +31,6 @@ document.getElementById("fasta").addEventListener('change', function () {
 
 });
 
-
 function search(locustag) {
 
     presente = false;
@@ -50,26 +48,50 @@ function search(locustag) {
 }
 
 document.getElementById("lista").addEventListener('change', function () {
+
     var saida = "";
     var filereader = new FileReader();
+    var count = 0;
 
     filereader.onload = function () {
-        var fasta = this.result.split("\n");
-        
-        for (let index = 0; index < fasta.length; index++) {
-            var linha = fasta[index].replace(/\r/g,'').replace(/^>/,'');
+        var linhas = this.result.split("\n");
+
+        for (let index = 0; index < linhas.length; index++) {
+            var linha = linhas[index].replace(/\r/g, '').replace(/^>/, '');
 
             if (search(linha)) {
                 saida += ">" + linha + "\n" + data[linha];
-                
+                count++;
             }
         }
-        
-        document.getElementById("fasta_texto").textContent = saida;
+        if (count > 0) {
+            document.getElementById("fasta_texto").textContent = saida;
+            progressBar();
+
+        } else {
+            document.getElementById("fasta_texto").textContent = "";
+            alert("Nenhuma locustag encontrada!");
+        }
+        data = {};
+
     }
     filereader.readAsText(this.files[0]);
-
 });
 
-    
+function progressBar() {
 
+    var elem = document.getElementById("myBar");
+    elem.hidden = false;
+    var width = 0;
+    var id = setInterval(frame, 5);
+
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+            elem.hidden = true;
+        } else {
+            width++;
+            elem.style.width = width + '%';
+        }
+    }
+}
